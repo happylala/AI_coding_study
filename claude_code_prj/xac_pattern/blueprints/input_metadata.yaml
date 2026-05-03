@@ -1,0 +1,20 @@
+BUBI_SQL_DB_NAME:
+    - component_name:BUBI_SQL
+    - component_parameter_name:BUBI_SQL_PARA
+    - component_type:SQL
+BUBI_ETL_ARTIFACT_ID:
+    - component_name:BUBI_ETL
+    - component_parameter_name:BUBI_ETL_PARA
+    - component_type:ETL
+BUBI_ADMS_ARTIFACT_ID:
+    - component_name:BUBI_ADMS
+    - component_parameter_name:BUBI_ADMS_PARA
+    - component_type:ETL
+BUBI_BIDS_ARTIFACT_ID:
+    - component_name:BUBI_BIDS
+    - component_parameter_name:BUBI_BIDS_PARA
+    - component_type:BIDS
+BUBI_LTS_ARTIFACT_ID:
+    - component_name:BUBI_LTS
+    - component_parameter_name:BUBI_LTS_PARA
+    - component_type:LTS

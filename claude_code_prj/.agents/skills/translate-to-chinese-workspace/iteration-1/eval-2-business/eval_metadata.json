@@ -1,0 +1,27 @@
+{
+  "eval_id": 2,
+  "eval_name": "business-ai-article",
+  "prompt": "我需要翻译这篇商业分析文章：\n\nThe rapid adoption of artificial intelligence in enterprise environments has fundamentally transformed how organizations approach decision-making processes. Companies that successfully integrate AI-driven analytics into their operations report significant improvements in efficiency, with some achieving up to 40% reduction in operational costs. However, the implementation journey is fraught with challenges, including data quality issues, talent shortages, and the need for substantial cultural shifts within organizations.",
+  "assertions": [
+    {
+      "name": "使用双语对照格式",
+      "description": "输出应包含'原文：'和'译文：'标记"
+    },
+    {
+      "name": "AI术语标注英文",
+      "description": "artificial intelligence、AI-driven analytics等术语应标注英文原文"
+    },
+    {
+      "name": "长句拆分成短句",
+      "description": "每个长句应拆分成多个短句，提高可读性"
+    },
+    {
+      "name": "保持专业易懂风格",
+      "description": "译文既专业又易于理解，适合商业场景"
+    },
+    {
+      "name": "数字准确翻译",
+      "description": "40%等数字信息准确保留"
+    }
+  ]
+}

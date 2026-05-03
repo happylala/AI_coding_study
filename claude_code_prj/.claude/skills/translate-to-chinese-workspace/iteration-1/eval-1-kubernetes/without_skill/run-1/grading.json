@@ -1,0 +1,32 @@
+{
+  "eval_id": 1,
+  "eval_name": "kubernetes-tech-doc",
+  "expectations": [
+    {
+      "text": "使用双语对照格式",
+      "passed": false,
+      "evidence": "输出只有中文译文，没有'原文：'和'译文：'标记"
+    },
+    {
+      "text": "专业术语保留英文",
+      "passed": false,
+      "evidence": "Kubernetes、YAML保留了，但没有使用'中文/English'格式"
+    },
+    {
+      "text": "长句已拆分",
+      "passed": false,
+      "evidence": "长句未拆分，第二句仍然很长"
+    },
+    {
+      "text": "译文自然流畅",
+      "passed": true,
+      "evidence": "译文自然流畅"
+    }
+  ],
+  "summary": {
+    "passed": 1,
+    "failed": 3,
+    "total": 4,
+    "pass_rate": 0.25
+  }
+}

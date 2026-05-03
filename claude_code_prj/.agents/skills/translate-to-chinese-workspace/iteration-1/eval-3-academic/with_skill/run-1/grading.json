@@ -1,0 +1,37 @@
+{
+  "eval_id": 3,
+  "eval_name": "academic-neuroplasticity",
+  "expectations": [
+    {
+      "text": "使用双语对照格式",
+      "passed": true,
+      "evidence": "输出包含'原文：'和'译文：'标记，使用了完整的双语对照格式"
+    },
+    {
+      "text": "不确定术语提供多个选项",
+      "passed": true,
+      "evidence": "提供了多个翻译选项，如'重组/重新组织 (reorganize)'、'适应机制/适应性机制 (adaptive mechanism)'、'补偿/代偿 (compensate)'、'固定性/不变性 (fixed nature)'"
+    },
+    {
+      "text": "长句拆分",
+      "passed": true,
+      "evidence": "长句已拆分成短句，如第二句拆分为两个短句"
+    },
+    {
+      "text": "学术风格严谨",
+      "passed": true,
+      "evidence": "译文保持学术论文的严谨性和正式性"
+    },
+    {
+      "text": "专业术语标注英文",
+      "passed": true,
+      "evidence": "专业术语标注了英文，如'神经可塑性/neuroplasticity'、'神经连接/neural connections'、'神经系统/nervous system'"
+    }
+  ],
+  "summary": {
+    "passed": 5,
+    "failed": 0,
+    "total": 5,
+    "pass_rate": 1.0
+  }
+}

@@ -1,0 +1,21 @@
+variable:
+    BUBI_SQL_DB_NAME:
+        - default:'${db_name}'
+        - description:db_name
+        - type:string
+    BUBI_ETL_ARTIFACT_ID:
+        - component_name:'${artifact_id}'
+        - component_parameter_name:artifact_id
+        - component_type:string
+    BUBI_ADMS_ARTIFACT_ID:
+        - component_name:'${artifact_id}'
+        - component_parameter_name:artifact_id
+        - component_type:string
+    BUBI_BIDS_ARTIFACT_ID:
+        - component_name:'${artifact_id}'
+        - component_parameter_name:artifact_id
+        - component_type:string
+    BUBI_LTS_ARTIFACT_ID:
+        - component_name:'${artifact_id}'
+        - component_parameter_name:artifact_id
+        - component_type:string

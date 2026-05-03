@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir F:/AI_Project/claude_code_prj/)",
+      "Bash(ls:*)",
+      "Bash(python -m http.server 8000)",
+      "Bash(netstat -ano)",
+      "Bash(taskkill:*)",
+      "Bash(mkdir -p __TRACKED_VAR__/__TRACKED_VAR__/run-1)",
+      "Bash(mv __TRACKED_VAR__/__TRACKED_VAR__/grading.json __TRACKED_VAR__/__TRACKED_VAR__/run-1/)",
+      "Bash(mv __TRACKED_VAR__/__TRACKED_VAR__/timing.json __TRACKED_VAR__/__TRACKED_VAR__/run-1/)",
+      "Bash(python -m scripts.aggregate_benchmark ../translate-to-chinese-workspace/iteration-1 --skill-name \"translate-to-chinese\")",
+      "Bash(start review.html)"
+    ]
+  }
+}

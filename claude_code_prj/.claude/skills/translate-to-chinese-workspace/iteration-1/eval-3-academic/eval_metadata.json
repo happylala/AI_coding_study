@@ -1,0 +1,27 @@
+{
+  "eval_id": 3,
+  "eval_name": "academic-neuroplasticity",
+  "prompt": "翻译这段学术内容，里面有些术语我不太确定怎么翻译最好：\n\nNeuroplasticity refers to the brain's remarkable ability to reorganize itself by forming new neural connections throughout life. This adaptive mechanism enables the nervous system to compensate for injury and disease, and to adjust activities in response to new situations or changes in the environment. Recent studies have demonstrated that neuroplasticity is not limited to childhood development but continues well into adulthood, challenging long-held assumptions about the fixed nature of the adult brain.",
+  "assertions": [
+    {
+      "name": "使用双语对照格式",
+      "description": "输出应包含'原文：'和'译文：'标记"
+    },
+    {
+      "name": "不确定术语提供多个选项",
+      "description": "neuroplasticity等术语应提供多个翻译选项，如：神经可塑性/大脑可塑性/神经重塑性"
+    },
+    {
+      "name": "长句拆分",
+      "description": "复杂的学术长句应拆分成短句"
+    },
+    {
+      "name": "学术风格严谨",
+      "description": "译文保持学术论文的严谨性和正式性"
+    },
+    {
+      "name": "专业术语标注英文",
+      "description": "nervous system等专业术语应标注英文原文"
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "metadata": {
+    "skill_name": "translate-to-chinese",
+    "skill_path": "F:\\AI_Project\\claude_code_prj\\.claude\\skills\\translate-to-chinese",
+    "executor_model": "claude-sonnet-4-6",
+    "timestamp": "2026-04-06T12:30:00Z",
+    "evals_run": [1, 2, 3],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.25,
+        "passed": 1,
+        "failed": 3,
+        "total": 4,
+        "time_seconds": 13.3,
+        "tokens": 17364
+      }
+    },
+    {
+      "eval_id": 1,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.25,
+        "passed": 1,
+        "failed": 3,
+        "total": 4,
+        "time_seconds": 53.1,
+        "tokens": 3415
+      }
+    },
+    {
+      "eval_id": 2,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.4,
+        "passed": 2,
+        "failed": 3,
+        "total": 5,
+        "time_seconds": 17.4,
+        "tokens": 2494
+      }
+    },
+    {
+      "eval_id": 2,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.4,
+        "passed": 2,
+        "failed": 3,
+        "total": 5,
+        "time_seconds": 13.5,
+        "tokens": 2185
+      }
+    },
+    {
+      "eval_id": 3,
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 1.0,
+        "passed": 5,
+        "failed": 0,
+        "total": 5,
+        "time_seconds": 47.3,
+        "tokens": 4751
+      }
+    },
+    {
+      "eval_id": 3,
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.2,
+        "passed": 1,
+        "failed": 4,
+        "total": 5,
+        "time_seconds": 39.0,
+        "tokens": 18112
+      }
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 0.55,
+        "stddev": 0.38,
+        "min": 0.25,
+        "max": 1.0
+      },
+      "time_seconds": {
+        "mean": 26.0,
+        "stddev": 18.3,
+        "min": 13.3,
+        "max": 47.3
+      },
+      "tokens": {
+        "mean": 8203,
+        "stddev": 8086,
+        "min": 2494,
+        "max": 17364
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.28,
+        "stddev": 0.10,
+        "min": 0.2,
+        "max": 0.4
+      },
+      "time_seconds": {
+        "mean": 35.2,
+        "stddev": 20.3,
+        "min": 13.5,
+        "max": 53.1
+      },
+      "tokens": {
+        "mean": 7904,
+        "stddev": 8726,
+        "min": 2185,
+        "max": 18112
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.27",
+      "time_seconds": "-9.2",
+      "tokens": "+299"
+    }
+  },
+  "notes": [
+    "测试3（学术内容）使用技能时达到100%通过率，完美实现了双语对照、多选项术语、长句拆分等所有要求",
+    "测试1和测试2的技能版本未能正确实现双语对照格式，这是主要失败原因",
+    "使用技能平均快9.2秒，通过率提高27%"
+  ]
+}

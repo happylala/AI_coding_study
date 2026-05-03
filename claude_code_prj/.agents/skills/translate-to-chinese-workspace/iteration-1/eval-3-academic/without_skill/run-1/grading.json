@@ -1,0 +1,37 @@
+{
+  "eval_id": 3,
+  "eval_name": "academic-neuroplasticity",
+  "expectations": [
+    {
+      "text": "使用双语对照格式",
+      "passed": false,
+      "evidence": "输出只有中文译文，没有双语对照格式"
+    },
+    {
+      "text": "不确定术语提供多个选项",
+      "passed": false,
+      "evidence": "未提供多个翻译选项，只使用了单一译法"
+    },
+    {
+      "text": "长句拆分",
+      "passed": false,
+      "evidence": "长句未拆分，如第二句'这种适应性机制使神经系统能够补偿损伤和疾病，并根据新情况或环境变化调整活动'仍然很长"
+    },
+    {
+      "text": "学术风格严谨",
+      "passed": true,
+      "evidence": "译文保持学术风格"
+    },
+    {
+      "text": "专业术语标注英文",
+      "passed": false,
+      "evidence": "专业术语未标注英文原文"
+    }
+  ],
+  "summary": {
+    "passed": 1,
+    "failed": 4,
+    "total": 5,
+    "pass_rate": 0.2
+  }
+}

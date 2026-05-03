@@ -1,0 +1,291 @@
+:root {
+  --bg: #0d1b2a;
+  --bg-soft: #132238;
+  --panel: rgba(14, 28, 45, 0.82);
+  --panel-border: rgba(158, 196, 255, 0.18);
+  --text: #e9f1fb;
+  --muted: #9fb4d1;
+  --accent: #ffb703;
+  --accent-strong: #fb8500;
+  --success: #8ecae6;
+  --shadow: 0 22px 60px rgba(4, 9, 18, 0.35);
+  --board-height: min(54vh, 500px);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Segoe UI", "PingFang SC", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at top, rgba(142, 202, 230, 0.16), transparent 35%),
+    radial-gradient(circle at bottom right, rgba(251, 133, 0, 0.14), transparent 28%),
+    linear-gradient(145deg, #08121f 0%, #10233d 52%, #09131f 100%);
+}
+
+.app-shell {
+  width: min(1020px, calc(100% - 24px));
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 14px 0 16px;
+}
+
+.hero {
+  margin-bottom: 12px;
+}
+
+.eyebrow {
+  margin: 0 0 4px;
+  color: var(--success);
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+}
+
+.hero h1 {
+  margin: 0;
+  font-size: clamp(1.9rem, 4vw, 3.2rem);
+  line-height: 0.95;
+}
+
+.subtitle {
+  margin: 8px 0 0;
+  max-width: 620px;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.game-layout {
+  display: grid;
+  grid-template-columns: minmax(300px, 1fr) 280px;
+  gap: 16px;
+  align-items: start;
+}
+
+.board-panel,
+.stats-card,
+.next-card,
+.tips-card {
+  background: var(--panel);
+  backdrop-filter: blur(14px);
+  border: 1px solid var(--panel-border);
+  border-radius: 28px;
+  box-shadow: var(--shadow);
+}
+
+.board-panel {
+  position: relative;
+  overflow: hidden;
+  padding: 12px;
+}
+
+#game,
+#next {
+  display: block;
+  width: 100%;
+  border-radius: 20px;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(180deg, #142740, #0d1929);
+  background-size: 30px 30px, 30px 30px, auto;
+}
+
+#game {
+  width: auto;
+  max-width: 100%;
+  height: var(--board-height);
+  margin: 0 auto;
+}
+
+.board-overlay {
+  position: absolute;
+  inset: 12px;
+  display: grid;
+  place-content: center;
+  gap: 8px;
+  padding: 18px;
+  text-align: center;
+  background: linear-gradient(180deg, rgba(7, 14, 24, 0.2), rgba(7, 14, 24, 0.8));
+  transition: opacity 180ms ease;
+}
+
+.board-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.board-overlay h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.board-overlay p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.sidebar {
+  display: grid;
+  gap: 12px;
+}
+
+.stats-card {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  padding: 12px;
+}
+
+.stat {
+  padding: 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.045);
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-size: 0.82rem;
+}
+
+.stat strong {
+  font-size: 1.5rem;
+}
+
+.next-card,
+.tips-card {
+  padding: 12px;
+}
+
+#next {
+  width: 96px;
+  margin-top: 6px;
+}
+
+.action-row {
+  display: grid;
+  gap: 8px;
+}
+
+button {
+  appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 14px;
+  padding: 11px 14px;
+  font: inherit;
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.06);
+  cursor: pointer;
+  transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+button.primary {
+  border: none;
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #111827;
+  font-weight: 700;
+}
+
+.tips-card p {
+  margin: 0 0 8px;
+  font-weight: 700;
+}
+
+.tips-card ul {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  line-height: 1.45;
+  font-size: 0.88rem;
+}
+
+.touch-controls {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(56px, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.touch-controls button {
+  min-height: 46px;
+  font-size: 1.05rem;
+  touch-action: manipulation;
+}
+
+.touch-controls .wide {
+  grid-column: span 5;
+  font-size: 0.92rem;
+  letter-spacing: 0.08em;
+}
+
+@media (max-width: 900px) {
+  :root {
+    --board-height: min(48vh, 460px);
+  }
+
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .action-row,
+  .tips-card {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --board-height: min(44vh, 420px);
+  }
+
+  .app-shell {
+    width: min(100% - 16px, 1120px);
+    padding-top: 10px;
+  }
+
+  .sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .action-row,
+  .tips-card {
+    grid-column: span 1;
+  }
+
+  .board-panel {
+    padding: 10px;
+  }
+
+  .board-overlay {
+    inset: 10px;
+  }
+
+  .touch-controls {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .touch-controls .wide {
+    grid-column: span 3;
+  }
+}

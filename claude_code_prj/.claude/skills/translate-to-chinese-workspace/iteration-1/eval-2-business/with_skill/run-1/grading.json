@@ -1,0 +1,37 @@
+{
+  "eval_id": 2,
+  "eval_name": "business-ai-article",
+  "expectations": [
+    {
+      "text": "使用双语对照格式",
+      "passed": false,
+      "evidence": "输出只有中文译文，没有'原文：'和'译文：'标记"
+    },
+    {
+      "text": "AI术语标注英文",
+      "passed": false,
+      "evidence": "AI术语未标注英文原文，如'人工智能'、'AI驱动的分析'没有标注"
+    },
+    {
+      "text": "长句拆分成短句",
+      "passed": false,
+      "evidence": "长句未拆分，如第一句仍然很长"
+    },
+    {
+      "text": "保持专业易懂风格",
+      "passed": true,
+      "evidence": "译文专业且易懂，适合商业场景"
+    },
+    {
+      "text": "数字准确翻译",
+      "passed": true,
+      "evidence": "40%准确保留"
+    }
+  ],
+  "summary": {
+    "passed": 2,
+    "failed": 3,
+    "total": 5,
+    "pass_rate": 0.4
+  }
+}

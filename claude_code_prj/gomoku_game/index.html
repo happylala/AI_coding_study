@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>五子棋游戏</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>五子棋游戏</h1>
+
+        <!-- 游戏信息面板 -->
+        <div class="game-info">
+            <div class="current-player">
+                当前玩家: <span id="currentPlayer">黑方</span>
+            </div>
+            <button id="restartBtn" class="btn">重新开始</button>
+        </div>
+
+        <!-- 棋盘容器 -->
+        <div id="board" class="board"></div>
+
+        <!-- 游戏结果提示 -->
+        <div id="gameResult" class="game-result hidden"></div>
+    </div>
+
+    <!-- 使用ES模块导入 -->
+    <script type="module" src="game.js"></script>
+</body>
+</html>

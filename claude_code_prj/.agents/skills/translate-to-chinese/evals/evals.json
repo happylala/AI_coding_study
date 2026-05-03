@@ -1,0 +1,82 @@
+{
+  "skill_name": "translate-to-chinese",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "请帮我翻译这段技术文档：\n\nKubernetes is an open-source container orchestration platform that automates the deployment, scaling, and management of containerized applications. It provides a robust framework for running distributed systems resiliently, allowing developers to declaratively manage application infrastructure through YAML configuration files. The platform handles service discovery, load balancing, and self-healing capabilities, making it the de facto standard for cloud-native application deployment.",
+      "expected_output": "双语对照的markdown格式翻译，专业术语保留英文（如Kubernetes、YAML），长句拆分成短句，译文自然流畅",
+      "assertions": [
+        {
+          "name": "使用双语对照格式",
+          "description": "输出应包含'原文：'和'译文：'标记，清晰区分英文原文和中文翻译"
+        },
+        {
+          "name": "专业术语保留英文",
+          "description": "Kubernetes、YAML、container等专业术语应保留英文原文，格式为'中文/English'"
+        },
+        {
+          "name": "长句已拆分",
+          "description": "原文中的长句（如第二句）应拆分成2-3个短句，每个短句不超过25个字"
+        },
+        {
+          "name": "译文自然流畅",
+          "description": "中文表达符合中文习惯，没有英文式的生硬翻译"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "我需要翻译这篇商业分析文章：\n\nThe rapid adoption of artificial intelligence in enterprise environments has fundamentally transformed how organizations approach decision-making processes. Companies that successfully integrate AI-driven analytics into their operations report significant improvements in efficiency, with some achieving up to 40% reduction in operational costs. However, the implementation journey is fraught with challenges, including data quality issues, talent shortages, and the need for substantial cultural shifts within organizations.",
+      "expected_output": "双语对照输出，长句拆分，保持商业文章的专业但易懂的风格，AI等术语标注英文",
+      "assertions": [
+        {
+          "name": "使用双语对照格式",
+          "description": "输出应包含'原文：'和'译文：'标记"
+        },
+        {
+          "name": "AI术语标注英文",
+          "description": "artificial intelligence、AI-driven analytics等术语应标注英文原文"
+        },
+        {
+          "name": "长句拆分成短句",
+          "description": "每个长句应拆分成多个短句，提高可读性"
+        },
+        {
+          "name": "保持专业易懂风格",
+          "description": "译文既专业又易于理解，适合商业场景"
+        },
+        {
+          "name": "数字准确翻译",
+          "description": "40%等数字信息准确保留"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "翻译这段学术内容，里面有些术语我不太确定怎么翻译最好：\n\nNeuroplasticity refers to the brain's remarkable ability to reorganize itself by forming new neural connections throughout life. This adaptive mechanism enables the nervous system to compensate for injury and disease, and to adjust activities in response to new situations or changes in the environment. Recent studies have demonstrated that neuroplasticity is not limited to childhood development but continues well into adulthood, challenging long-held assumptions about the fixed nature of the adult brain.",
+      "expected_output": "双语对照，neuroplasticity等可能有多种翻译的术语应标注多个选项（如：神经可塑性/大脑重塑性），长句拆分，学术风格严谨",
+      "assertions": [
+        {
+          "name": "使用双语对照格式",
+          "description": "输出应包含'原文：'和'译文：'标记"
+        },
+        {
+          "name": "不确定术语提供多个选项",
+          "description": "neuroplasticity等术语应提供多个翻译选项，如：神经可塑性/大脑可塑性/神经重塑性"
+        },
+        {
+          "name": "长句拆分",
+          "description": "复杂的学术长句应拆分成短句"
+        },
+        {
+          "name": "学术风格严谨",
+          "description": "译文保持学术论文的严谨性和正式性"
+        },
+        {
+          "name": "专业术语标注英文",
+          "description": "nervous system等专业术语应标注英文原文"
+        }
+      ]
+    }
+  ]
+}

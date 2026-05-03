@@ -1,0 +1,11 @@
+app_id:com.tsts.bubi
+description:pattern_tst
+version:1.0
+spec:PRO
+stack_name:BUBI PATTERN
+workflow_alternative:
+    name:workflow_plan1
+        spec_alternative:
+            - PRO
+            - UAT
+        

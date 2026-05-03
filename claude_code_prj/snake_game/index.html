@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>贪吃蛇</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body.theme-scifi {
+      --bg: #0d0d1a; --panel-bg: #1a1a2e; --border: #4ecca3;
+      --accent: #4ecca3; --accent2: #e94560; --canvas-bg: #0f3460;
+      --glow: #4ecca344; --text: #eee; --sub: #888; --btn-text: #0d0d1a;
+      --font: 'Segoe UI', 'Courier New', monospace;
+    }
+    body.theme-minimal {
+      --bg: #f5f5f0; --panel-bg: #fff; --border: #333;
+      --accent: #222; --accent2: #e63946; --canvas-bg: #fafaf7;
+      --glow: transparent; --text: #222; --sub: #999; --btn-text: #fff;
+      --font: 'Segoe UI', Arial, sans-serif;
+    }
+    body {
+      background: var(--bg); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; min-height: 100vh;
+      font-family: var(--font); color: var(--text); transition: background 0.3s;
+    }
+    #toolbar { display: flex; gap: 10px; margin-bottom: 10px; }
+    .theme-btn {
+      padding: 5px 16px; border: 1.5px solid var(--border); border-radius: 20px;
+      background: transparent; color: var(--text); cursor: pointer;
+      font-size: 0.82rem; transition: background 0.2s; font-family: var(--font);
+    }
+    .theme-btn.active, .theme-btn:hover { background: var(--accent); color: var(--btn-text); border-color: var(--accent); }
+    h1 { font-size: 2rem; margin-bottom: 10px; color: var(--accent); letter-spacing: 4px; text-shadow: 0 0 10px var(--glow); }
+    #scoreboard { display: flex; gap: 24px; margin-bottom: 8px; font-size: 0.95rem; flex-wrap: wrap; justify-content: center; }
+    #scoreboard span { color: var(--accent); font-weight: bold; font-size: 1.1rem; }
+    #level-bar-wrap { width: 400px; height: 6px; background: rgba(128,128,128,0.2); border-radius: 3px; margin-bottom: 8px; overflow: hidden; }
+    #level-bar { height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.3s; }
+    #game-container { position: relative; }
+    canvas { display: block; border: 2px solid var(--border); border-radius: 6px; box-shadow: 0 0 24px var(--glow); background: var(--canvas-bg); }
+    #overlay {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.72); display: flex; flex-direction: column;
+      align-items: center; justify-content: center; border-radius: 6px;
+    }
+    #overlay h2 { font-size: 1.9rem; color: var(--accent); margin-bottom: 8px; text-align: center; padding: 0 12px; }
+    #overlay .sub { color: #ccc; margin-bottom: 4px; font-size: 0.95rem; text-align: center; padding: 0 16px; line-height: 1.7; }
+    #overlay button {
+      margin-top: 16px; padding: 11px 34px; font-size: 1.05rem;
+      background: var(--accent); color: var(--btn-text); border: none;
+      border-radius: 4px; cursor: pointer; font-weight: bold;
+      letter-spacing: 2px; font-family: var(--font);
+    }
+    #overlay button:hover { opacity: 0.82; }
+    #controls { margin-top: 12px; font-size: 0.82rem; color: var(--sub); text-align: center; line-height: 2; }
+  </style>
+</head>
+<body class="theme-scifi">
+  <div id="toolbar">
+    <button class="theme-btn active" id="btn-scifi" onclick="setTheme('scifi')">科幻</button>
+    <button class="theme-btn" id="btn-minimal" onclick="setTheme('minimal')">简约</button>
+  </div>
+  <h1>贪吃蛇</h1>
+  <div id="scoreboard">
+    <div>得分：<span id="score">0</span></div>
+    <div>最高分：<span id="best">0</span></div>
+    <div>关卡：<span id="lv">1</span>/5</div>
+    <div>本关：<span id="lv-score">0</span>/10</div>
+  </div>
+  <div id="level-bar-wrap"><div id="level-bar" style="width:0%"></div></div>
+  <div id="game-container">
+    <canvas id="canvas" width="400" height="400"></canvas>
+    <div id="overlay">
+      <h2>贪 吃 蛇</h2>
+      <div class="sub">方向键 / WASD 控制方向<br>每关吃 10 个食物过关，共 5 关</div>
+      <button id="startBtn">开始游戏</button>
+    </div>
+  </div>
+  <div id="controls">方向键 / WASD 移动 &nbsp;|&nbsp; P 暂停/继续 &nbsp;|&nbsp; 每关吃 10 个食物过关</div>
+
+<script>
+const COLS = 20, ROWS = 20, CELL = 20;
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+const LEVELS = [
+  { level:1, speed:160, obstacles:0,  desc:'无障碍，轻松上路' },
+  { level:2, speed:130, obstacles:4,  desc:'少量障碍，速度提升' },
+  { level:3, speed:105, obstacles:8,  desc:'中等障碍，小心闪避' },
+  { level:4, speed:82,  obstacles:14, desc:'障碍增多，速度加快' },
+  { level:5, speed:60,  obstacles:20, desc:'最终关卡，极速挑战！' },
+];
+const FOOD_PER_LEVEL = 10;
+
+const THEMES = {
+  scifi: {
+    canvasBg: '#0f3460', gridLine: 'rgba(255,255,255,0.03)',
+    snakeHead: '#4ecca3', snakeGlow: '#4ecca3',
+    snakeBody: r => `rgb(30,${Math.floor(110+r*90)},120)`,
+    food: '#ff6b6b', foodGlow: '#ff6b6b',
+    obstacle: '#e94560', obstGlow: '#e9456088', eyeColor: '#0f3460',
+  },
+  minimal: {
+    canvasBg: '#fafaf7', gridLine: 'rgba(0,0,0,0.05)',
+    snakeHead: '#222', snakeGlow: 'transparent',
+    snakeBody: r => { const v=Math.floor(50+r*80); return `rgb(${v},${v},${v})`; },
+    food: '#e63946', foodGlow: 'transparent',
+    obstacle: '#bbb', obstGlow: 'transparent', eyeColor: '#fafaf7',
+  },
+};
+let currentTheme = 'scifi';
+
+function setTheme(t) {
+  currentTheme = t;
+  document.body.className = 'theme-' + t;
+  document.getElementById('btn-scifi').classList.toggle('active', t==='scifi');
+  document.getElementById('btn-minimal').classList.toggle('active', t==='minimal');
+  draw();
+}
+
+let snake, dir, nextDir, food, obstacles;
+let score, best, levelIndex, levelFoodEaten, running, paused, timer;
+
+best = parseInt(localStorage.getItem('snakeBest') || '0');
+document.getElementById('best').textContent = best;
+
+function initLevel(idx) {
+  levelIndex = idx;
+  levelFoodEaten = 0;
+  dir = {x:1, y:0}; nextDir = {x:1, y:0};
+  const sx = Math.floor(COLS/2)-2, sy = Math.floor(ROWS/2);
+  snake = [{x:sx+2,y:sy},{x:sx+1,y:sy},{x:sx,y:sy}];
+  placeObstacles();
+  placeFood();
+  updateHUD();
+}
+
+function initGame() {
+  score = 0;
+  document.getElementById('score').textContent = 0;
+  initLevel(0);
+  running = true; paused = false;
+}
+
+function placeObstacles() {
+  obstacles = [];
+  const count = LEVELS[levelIndex].obstacles;
+  const forbidden = new Set();
+  snake.forEach(s => {
+    for (let dx=-4; dx<=4; dx++)
+      for (let dy=-4; dy<=4; dy++) {
+        const nx=s.x+dx, ny=s.y+dy;
+        if (nx>=0&&nx<COLS&&ny>=0&&ny<ROWS) forbidden.add(nx+','+ny);
+      }
+  });
+  let tries=0;
+  while (obstacles.length<count && tries<2000) {
+    tries++;
+    const x=Math.floor(Math.random()*COLS), y=Math.floor(Math.random()*ROWS);
+    const key=x+','+y;
+    if (!forbidden.has(key)) { obstacles.push({x,y}); forbidden.add(key); }
+  }
+}
+
+function placeFood() {
+  const occ = new Set();
+  snake.forEach(s=>occ.add(s.x+','+s.y));
+  obstacles.forEach(o=>occ.add(o.x+','+o.y));
+  let pos;
+  do { pos={x:Math.floor(Math.random()*COLS),y:Math.floor(Math.random()*ROWS)}; }
+  while (occ.has(pos.x+','+pos.y));
+  food = pos;
+}
+
+function updateHUD() {
+  document.getElementById('lv').textContent = levelIndex+1;
+  document.getElementById('lv-score').textContent = levelFoodEaten;
+  document.getElementById('level-bar').style.width = (levelFoodEaten/FOOD_PER_LEVEL*100)+'%';
+}
+
+function scheduleStep() {
+  clearTimeout(timer);
+  timer = setTimeout(step, LEVELS[levelIndex].speed);
+}
+
+function step() {
+  if (!running||paused) return;
+  dir = nextDir;
+  const head = {x:snake[0].x+dir.x, y:snake[0].y+dir.y};
+  if (head.x<0||head.x>=COLS||head.y<0||head.y>=ROWS) { gameOver('撞墙了！'); return; }
+  if (snake.some(s=>s.x===head.x&&s.y===head.y))       { gameOver('咬到自己了！'); return; }
+  if (obstacles.some(o=>o.x===head.x&&o.y===head.y))   { gameOver('撞到障碍了！'); return; }
+  snake.unshift(head);
+  if (head.x===food.x&&head.y===food.y) {
+    score++; levelFoodEaten++;
+    document.getElementById('score').textContent = score;
+    if (score>best) { best=score; document.getElementById('best').textContent=best; localStorage.setItem('snakeBest',best); }
+    updateHUD();
+    if (levelFoodEaten>=FOOD_PER_LEVEL) {
+      draw();
+      if (levelIndex>=LEVELS.length-1) {
+        running=false;
+        showOverlay('恭喜通关！',`总得分：${score}　最高分：${best}`,'再来一局',()=>{ initGame(); scheduleStep(); });
+      } else {
+        running=false;
+        const next=levelIndex+1;
+        showOverlay(`第 ${levelIndex+1} 关通过！`,`下一关：${LEVELS[next].desc}`,'进入下一关',()=>{ initLevel(next); running=true; scheduleStep(); });
+      }
+      return;
+    }
+    placeFood();
+  } else {
+    snake.pop();
+  }
+  draw();
+  scheduleStep();
+}
+
+function draw() {
+  const T = THEMES[currentTheme];
+  ctx.fillStyle = T.canvasBg;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  // grid
+  ctx.strokeStyle = T.gridLine; ctx.lineWidth = 0.5;
+  for (let i=0;i<=COLS;i++) { ctx.beginPath(); ctx.moveTo(i*CELL,0); ctx.lineTo(i*CELL,canvas.height); ctx.stroke(); }
+  for (let j=0;j<=ROWS;j++) { ctx.beginPath(); ctx.moveTo(0,j*CELL); ctx.lineTo(canvas.width,j*CELL); ctx.stroke(); }
+
+  // obstacles
+  obstacles.forEach(o => {
+    ctx.shadowColor = T.obstGlow; ctx.shadowBlur = currentTheme==='scifi'?8:0;
+    ctx.fillStyle = T.obstacle;
+    ctx.fillRect(o.x*CELL+1,o.y*CELL+1,CELL-2,CELL-2);
+    ctx.shadowBlur=0;
+    if (currentTheme==='scifi') {
+      ctx.strokeStyle='rgba(255,255,255,0.25)'; ctx.lineWidth=1;
+      ctx.beginPath();
+      ctx.moveTo(o.x*CELL+3,o.y*CELL+3); ctx.lineTo(o.x*CELL+CELL-3,o.y*CELL+CELL-3);
+      ctx.moveTo(o.x*CELL+CELL-3,o.y*CELL+3); ctx.lineTo(o.x*CELL+3,o.y*CELL+CELL-3);
+      ctx.stroke();
+    }
+  });
+
+  // food
+  ctx.fillStyle=T.food; ctx.shadowColor=T.foodGlow; ctx.shadowBlur=currentTheme==='scifi'?10:0;
+  ctx.beginPath();
+  ctx.arc(food.x*CELL+CELL/2,food.y*CELL+CELL/2,CELL/2-2,0,Math.PI*2);
+  ctx.fill(); ctx.shadowBlur=0;
+
+  // snake
+  snake.forEach((seg,i)=>{
+    const ratio=1-i/snake.length;
+    ctx.fillStyle = i===0 ? T.snakeHead : T.snakeBody(ratio);
+    ctx.shadowColor = i===0 ? T.snakeGlow : 'transparent';
+    ctx.shadowBlur = i===0 && currentTheme==='scifi' ? 8 : 0;
+    const pad=i===0?1:2;
+    ctx.fillRect(seg.x*CELL+pad,seg.y*CELL+pad,CELL-pad*2,CELL-pad*2);
+  });
+  ctx.shadowBlur=0;
+
+  // eyes
+  const hx=snake[0].x*CELL, hy=snake[0].y*CELL;
+  ctx.fillStyle=T.eyeColor;
+  let eyes;
+  if      (dir.x===1)  eyes=[{dx:14,dy:4},{dx:14,dy:13}];
+  else if (dir.x===-1) eyes=[{dx:4, dy:4},{dx:4, dy:13}];
+  else if (dir.y===1)  eyes=[{dx:4, dy:14},{dx:13,dy:14}];
+  else                 eyes=[{dx:4, dy:4}, {dx:13,dy:4}];
+  eyes.forEach(e=>{ ctx.beginPath(); ctx.arc(hx+e.dx,hy+e.dy,2,0,Math.PI*2); ctx.fill(); });
+}
+
+function showOverlay(title, sub, btnText, onStart) {
+  const ov = document.getElementById('overlay');
+  ov.innerHTML = `<h2>${title}</h2><div class="sub">${sub}</div><button>${btnText}</button>`;
+  ov.style.display='flex';
+  ov.querySelector('button').addEventListener('click',()=>{ ov.style.display='none'; onStart(); });
+}
+
+function gameOver(reason) {
+  running=false; clearTimeout(timer); draw();
+  showOverlay('游戏结束',`${reason}<br>得分：${score}　最高分：${best}`,'再来一局',()=>{ initGame(); scheduleStep(); });
+}
+
+document.addEventListener('keydown',e=>{
+  switch(e.key){
+    case 'ArrowUp':    case 'w': case 'W': if(dir.y!==1)  nextDir={x:0,y:-1}; e.preventDefault(); break;
+    case 'ArrowDown':  case 's': case 'S': if(dir.y!==-1) nextDir={x:0,y:1};  e.preventDefault(); break;
+    case 'ArrowLeft':  case 'a': case 'A': if(dir.x!==1)  nextDir={x:-1,y:0}; e.preventDefault(); break;
+    case 'ArrowRight': case 'd': case 'D': if(dir.x!==-1) nextDir={x:1,y:0};  e.preventDefault(); break;
+    case 'p': case 'P':
+      if (!running) break;
+      paused=!paused;
+      if (!paused) scheduleStep();
+      break;
+  }
+});
+
+document.getElementById('startBtn').addEventListener('click',()=>{
+  document.getElementById('overlay').style.display='none';
+  initGame(); scheduleStep();
+});
+
+// initial blank draw
+ctx.fillStyle=THEMES[currentTheme].canvasBg;
+ctx.fillRect(0,0,canvas.width,canvas.height);
+</script>
+</body>
+</html>

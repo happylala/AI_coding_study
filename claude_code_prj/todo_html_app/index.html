@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>待办清单</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="todo-card">
+      <header class="card-header">
+        <p class="eyebrow">专注效率</p>
+        <h1>待办清单</h1>
+      </header>
+
+      <form id="todo-form" class="todo-form" autocomplete="off">
+        <label for="todo-input" class="sr-only">添加任务</label>
+        <input id="todo-input" name="todo" type="text" maxlength="100" placeholder="输入任务内容..." required>
+        <button type="submit">添加</button>
+      </form>
+
+      <section class="controls" aria-label="任务筛选">
+        <button type="button" class="filter-btn active" data-filter="all">全部</button>
+        <button type="button" class="filter-btn" data-filter="active">进行中</button>
+        <button type="button" class="filter-btn" data-filter="completed">已完成</button>
+      </section>
+
+      <ul id="todo-list" class="todo-list" aria-live="polite"></ul>
+
+      <footer class="card-footer">
+        <span id="todo-count">剩余 0 项</span>
+        <button id="clear-completed" type="button" class="ghost-btn">清除已完成</button>
+      </footer>
+    </section>
+  </main>
+
+  <template id="todo-item-template">
+    <li class="todo-item">
+      <label class="todo-check-wrap">
+        <input class="todo-check" type="checkbox">
+        <span class="check-indicator" aria-hidden="true"></span>
+      </label>
+      <span class="todo-text"></span>
+      <button class="delete-btn" type="button" aria-label="删除任务">删除</button>
+    </li>
+  </template>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>俄罗斯方块</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main class="app-shell">
+    <section class="hero">
+      <p class="eyebrow">Classic Arcade</p>
+      <h1>俄罗斯方块</h1>
+      <p class="subtitle">方向键移动，`↑` 或 `X` 旋转，`Z` 反向旋转，空格直接落到底。</p>
+    </section>
+
+    <section class="game-layout">
+      <div class="board-panel">
+        <canvas id="game" width="300" height="600" aria-label="俄罗斯方块游戏画布"></canvas>
+        <div class="board-overlay" id="overlay">
+          <h2 id="overlay-title">按开始进入游戏</h2>
+          <p id="overlay-text">清除整行来得分，速度会随等级提升。</p>
+        </div>
+      </div>
+
+      <aside class="sidebar">
+        <div class="stats-card">
+          <div class="stat">
+            <span class="label">分数</span>
+            <strong id="score">0</strong>
+          </div>
+          <div class="stat">
+            <span class="label">等级</span>
+            <strong id="level">1</strong>
+          </div>
+          <div class="stat">
+            <span class="label">消行</span>
+            <strong id="lines">0</strong>
+          </div>
+          <div class="stat">
+            <span class="label">最高分</span>
+            <strong id="best">0</strong>
+          </div>
+        </div>
+
+        <div class="next-card">
+          <span class="label">下一个</span>
+          <canvas id="next" width="120" height="120" aria-label="下一个方块预览"></canvas>
+        </div>
+
+        <div class="action-row">
+          <button id="start-btn" class="primary">开始 / 继续</button>
+          <button id="pause-btn">暂停</button>
+          <button id="restart-btn">重新开始</button>
+        </div>
+
+        <div class="tips-card">
+          <p>操作说明</p>
+          <ul>
+            <li>← →：左右移动</li>
+            <li>↓：加速下落</li>
+            <li>↑ / X：顺时针旋转</li>
+            <li>Z：逆时针旋转</li>
+            <li>空格：直接落底</li>
+            <li>P：暂停 / 继续</li>
+          </ul>
+        </div>
+      </aside>
+    </section>
+
+    <section class="touch-controls" aria-label="触屏控制">
+      <button data-action="rotate-left">↺</button>
+      <button data-action="left">←</button>
+      <button data-action="down">↓</button>
+      <button data-action="right">→</button>
+      <button data-action="rotate-right">↻</button>
+      <button data-action="drop" class="wide">落底</button>
+    </section>
+  </main>
+
+  <script src="./script.js"></script>
+</body>
+</html>

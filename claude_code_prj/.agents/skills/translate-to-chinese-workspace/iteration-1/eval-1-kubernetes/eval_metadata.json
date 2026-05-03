@@ -1,0 +1,23 @@
+{
+  "eval_id": 1,
+  "eval_name": "kubernetes-tech-doc",
+  "prompt": "请帮我翻译这段技术文档：\n\nKubernetes is an open-source container orchestration platform that automates the deployment, scaling, and management of containerized applications. It provides a robust framework for running distributed systems resiliently, allowing developers to declaratively manage application infrastructure through YAML configuration files. The platform handles service discovery, load balancing, and self-healing capabilities, making it the de facto standard for cloud-native application deployment.",
+  "assertions": [
+    {
+      "name": "使用双语对照格式",
+      "description": "输出应包含'原文：'和'译文：'标记，清晰区分英文原文和中文翻译"
+    },
+    {
+      "name": "专业术语保留英文",
+      "description": "Kubernetes、YAML、container等专业术语应保留英文原文，格式为'中文/English'"
+    },
+    {
+      "name": "长句已拆分",
+      "description": "原文中的长句（如第二句）应拆分成2-3个短句，每个短句不超过25个字"
+    },
+    {
+      "name": "译文自然流畅",
+      "description": "中文表达符合中文习惯，没有英文式的生硬翻译"
+    }
+  ]
+}

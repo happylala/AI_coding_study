@@ -1,0 +1,15 @@
+components:[]
+workflowSpec:
+    -name:
+        steps:
+            -name:BUBI_SQL
+            -type:SQL
+            subSteps:
+                -name:BUBI_ETL
+                -type:ETL
+                -name:BUBI_ADMS
+                -type:ETL
+                -name:BUBI_BIDS
+                -type:BIDS
+            -name:BUBI_LTS
+            -type:BUBI_LTS

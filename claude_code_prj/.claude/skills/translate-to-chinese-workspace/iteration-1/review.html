@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>翻译技能评估结果</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 1200px; margin: 0 auto; background: white; padding: 20px; border-radius: 8px; }
+        h1 { color: #333; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 2px solid #ddd; }
+        .tab { padding: 10px 20px; cursor: pointer; background: #f0f0f0; border: none; border-radius: 5px 5px 0 0; }
+        .tab.active { background: #4CAF50; color: white; }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .eval-case { margin-bottom: 30px; padding: 20px; background: #f9f9f9; border-radius: 5px; }
+        .comparison { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .output-box { padding: 15px; background: white; border: 1px solid #ddd; border-radius: 5px; }
+        .output-box h3 { margin-top: 0; color: #4CAF50; }
+        .grading { margin-top: 15px; }
+        .assertion { padding: 8px; margin: 5px 0; border-radius: 3px; }
+        .assertion.passed { background: #d4edda; color: #155724; }
+        .assertion.failed { background: #f8d7da; color: #721c24; }
+        .summary-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .summary-table th, .summary-table td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        .summary-table th { background: #4CAF50; color: white; }
+        .metric-good { color: #28a745; font-weight: bold; }
+        .metric-bad { color: #dc3545; font-weight: bold; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>翻译技能评估结果</h1>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('outputs')">翻译输出对比</button>
+            <button class="tab" onclick="showTab('benchmark')">基准测试数据</button>
+        </div>
+
+        <div id="outputs" class="tab-content active">
+            <h2>测试用例对比</h2>
+
+            <div class="eval-case">
+                <h3>测试1: Kubernetes技术文档</h3>
+                <div class="comparison">
+                    <div class="output-box">
+                        <h3>使用技能 (通过率: 25%)</h3>
+                        <p><strong>输出:</strong></p>
+                        <pre>Kubernetes 是一个开源的容器编排平台，可自动化容器化应用程序的部署、扩展和管理。它为弹性运行分布式系统提供了强大的框架，允许开发人员通过 YAML 配置文件以声明式方式管理应用程序基础设施。该平台处理服务发现、负载均衡和自我修复功能，使其成为云原生应用程序部署的事实标准。</pre>
+                        <div class="grading">
+                            <div class="assertion failed">❌ 使用双语对照格式 - 未使用</div>
+                            <div class="assertion failed">❌ 专业术语保留英文 - 格式不正确</div>
+                            <div class="assertion failed">❌ 长句已拆分 - 未拆分</div>
+                            <div class="assertion passed">✓ 译文自然流畅</div>
+                        </div>
+                    </div>
+                    <div class="output-box">
+                        <h3>不使用技能 (通过率: 25%)</h3>
+                        <p><strong>输出:</strong></p>
+                        <pre>Kubernetes 是一个开源的容器编排平台，可自动化容器化应用程序的部署、扩展和管理。它为弹性运行分布式系统提供了强大的框架，允许开发人员通过 YAML 配置文件以声明式方式管理应用程序基础设施。该平台处理服务发现、负载均衡和自我修复功能，使其成为云原生应用程序部署的事实标准。</pre>
+                        <div class="grading">
+                            <div class="assertion failed">❌ 使用双语对照格式</div>
+                            <div class="assertion failed">❌ 专业术语保留英文</div>
+                            <div class="assertion failed">❌ 长句已拆分</div>
+                            <div class="assertion passed">✓ 译文自然流畅</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="eval-case">
+                <h3>测试2: 商业AI文章</h3>
+                <div class="comparison">
+                    <div class="output-box">
+                        <h3>使用技能 (通过率: 40%)</h3>
+                        <p><strong>输出:</strong></p>
+                        <pre>人工智能在企业环境中的快速应用已经从根本上改变了组织处理决策流程的方式。成功将AI驱动的分析整合到运营中的公司报告称效率显著提升，其中一些公司的运营成本降低了高达40%。然而，实施过程充满挑战，包括数据质量问题、人才短缺，以及组织内部需要进行重大文化转变。</pre>
+                        <div class="grading">
+                            <div class="assertion failed">❌ 使用双语对照格式</div>
+                            <div class="assertion failed">❌ AI术语标注英文</div>
+                            <div class="assertion failed">❌ 长句拆分成短句</div>
+                            <div class="assertion passed">✓ 保持专业易懂风格</div>
+                            <div class="assertion passed">✓ 数字准确翻译 (40%)</div>
+                        </div>
+                    </div>
+                    <div class="output-box">
+                        <h3>不使用技能 (通过率: 40%)</h3>
+                        <p><strong>输出:</strong></p>
+                        <pre>人工智能在企业环境中的快速应用已经从根本上改变了组织处理决策流程的方式。成功将AI驱动的分析整合到运营中的公司报告称效率显著提升，其中一些公司的运营成本降低了高达40%。然而，实施过程充满挑战，包括数据质量问题、人才短缺，以及组织内部需要进行重大文化转变。</pre>
+                        <div class="grading">
+                            <div class="assertion failed">❌ 使用双语对照格式</div>
+                            <div class="assertion failed">❌ AI术语标注英文</div>
+                            <div class="assertion failed">❌ 长句拆分成短句</div>
+                            <div class="assertion passed">✓ 保持专业易懂风格</div>
+                            <div class="assertion passed">✓ 数字准确翻译</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="eval-case">
+                <h3>测试3: 学术神经可塑性 ⭐</h3>
+                <div class="comparison">
+                    <div class="output-box">
+                        <h3>使用技能 (通过率: 100%) 🎉</h3>
+                        <p><strong>输出:</strong></p>
+                        <pre>**原文：**
+Neuroplasticity refers to the brain's remarkable ability to reorganize itself by forming new neural connections throughout life.
+
+**译文：**
+神经可塑性/neuroplasticity 是指大脑在整个生命周期中通过形成新的神经连接/neural connections 来重组/重新组织 (reorganize) 自身的非凡能力。
+
+---
+
+**原文：**
+This adaptive mechanism enables the nervous system to compensate for injury and disease...
+
+**译文：**
+这种适应机制/适应性机制 (adaptive mechanism) 使神经系统/nervous system 能够补偿/代偿 (compensate) 损伤和疾病带来的影响。它还能根据新情况或环境变化来调整活动。</pre>
+                        <div class="grading">
+                            <div class="assertion passed">✓ 使用双语对照格式</div>
+                            <div class="assertion passed">✓ 不确定术语提供多个选项</div>
+                            <div class="assertion passed">✓ 长句拆分</div>
+                            <div class="assertion passed">✓ 学术风格严谨</div>
+                            <div class="assertion passed">✓ 专业术语标注英文</div>
+                        </div>
+                    </div>
+                    <div class="output-box">
+                        <h3>不使用技能 (通过率: 20%)</h3>
+                        <p><strong>输出:</strong></p>
+                        <pre>神经可塑性是指大脑在整个生命周期中通过形成新的神经连接来重组自身的非凡能力。这种适应性机制使神经系统能够补偿损伤和疾病，并根据新情况或环境变化调整活动。近期研究表明，神经可塑性不仅限于儿童发育阶段，而是持续到成年期，这挑战了长期以来关于成年大脑固定性质的假设。</pre>
+                        <div class="grading">
+                            <div class="assertion failed">❌ 使用双语对照格式</div>
+                            <div class="assertion failed">❌ 不确定术语提供多个选项</div>
+                            <div class="assertion failed">❌ 长句拆分</div>
+                            <div class="assertion passed">✓ 学术风格严谨</div>
+                            <div class="assertion failed">❌ 专业术语标注英文</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="benchmark" class="tab-content">
+            <h2>基准测试统计</h2>
+            <table class="summary-table">
+                <tr>
+                    <th>指标</th>
+                    <th>使用技能</th>
+                    <th>不使用技能</th>
+                    <th>差异</th>
+                </tr>
+                <tr>
+                    <td>通过率</td>
+                    <td>55% ± 38%</td>
+                    <td>28% ± 10%</td>
+                    <td class="metric-good">+27%</td>
+                </tr>
+                <tr>
+                    <td>平均耗时</td>
+                    <td>26.0s ± 18.3s</td>
+                    <td>35.2s ± 20.3s</td>
+                    <td class="metric-good">-9.2s (更快)</td>
+                </tr>
+                <tr>
+                    <td>Token使用</td>
+                    <td>8203 ± 8086</td>
+                    <td>7904 ± 8726</td>
+                    <td class="metric-bad">+299</td>
+                </tr>
+            </table>
+
+            <h3>关键发现</h3>
+            <ul>
+                <li>✅ 测试3（学术内容）使用技能时达到<strong>100%通过率</strong>，完美实现了所有要求</li>
+                <li>⚠️ 测试1和测试2的技能版本未能正确实现双语对照格式</li>
+                <li>⚡ 使用技能平均快<strong>9.2秒</strong></li>
+                <li>📈 通过率平均提高<strong>27%</strong></li>
+            </ul>
+
+            <h3>需要改进的地方</h3>
+            <ul>
+                <li>技能在测试1和测试2中没有生成双语对照格式，需要加强这方面的指导</li>
+                <li>专业术语标注格式需要更明确的说明</li>
+                <li>长句拆分规则需要更清晰</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>
