@@ -2,6 +2,8 @@
 import { Board } from './board.js';
 // 从gameLogic.js导入游戏逻辑类
 import { GameLogic } from './gameLogic.js';
+// 从ai.js导入AI类
+import { AI } from './ai.js';
 
 /**
  * 游戏主控制类
@@ -19,6 +21,12 @@ class Game {
         this.currentPlayer = true;
         // 游戏是否结束
         this.gameOver = false;
+        // 游戏模式：'pvp'为双人对战，'pve'为人机对战
+        this.gameMode = 'pvp';
+        // AI实例
+        this.ai = null;
+        // AI难度（1-3）
+        this.aiDifficulty = 2;
 
         // 初始化游戏
         this.init();
@@ -46,6 +54,19 @@ class Game {
         const restartBtn = document.getElementById('restartBtn');
         // 监听重新开始按钮点击事件
         restartBtn.addEventListener('click', () => this.restart());
+
+        // 监听游戏模式选择
+        const gameModeSelect = document.getElementById('gameMode');
+        gameModeSelect.addEventListener('change', (e) => this.changeGameMode(e.target.value));
+
+        // 监听AI难度选择
+        const aiDifficultySelect = document.getElementById('aiDifficulty');
+        aiDifficultySelect.addEventListener('change', (e) => {
+            this.aiDifficulty = parseInt(e.target.value);
+            if (this.ai) {
+                this.ai = new AI(this.boardSize, this.aiDifficulty);
+            }
+        });
     }
 
     /**
@@ -55,6 +76,9 @@ class Game {
     handleCellClick(e) {
         // 如果游戏已结束，不处理点击
         if (this.gameOver) return;
+
+        // 在人机模式下，如果当前是AI回合，不处理玩家点击
+        if (this.gameMode === 'pve' && !this.currentPlayer) return;
 
         // 获取被点击的格子元素
         const cell = e.target;
@@ -67,6 +91,16 @@ class Game {
         const row = parseInt(cell.dataset.row);
         const col = parseInt(cell.dataset.col);
 
+        // 执行落子
+        this.makeMove(row, col);
+    }
+
+    /**
+     * 执行落子操作
+     * @param {number} row - 行索引
+     * @param {number} col - 列索引
+     */
+    makeMove(row, col) {
         // 在游戏逻辑中放置棋子
         this.gameLogic.placeStone(row, col, this.currentPlayer);
         // 在UI上显示棋子
@@ -87,6 +121,47 @@ class Game {
         // 切换玩家
         this.currentPlayer = !this.currentPlayer;
         this.updatePlayerDisplay();
+
+        // 如果是人机模式且轮到AI，让AI下棋
+        if (this.gameMode === 'pve' && !this.currentPlayer) {
+            // 延迟一下，让玩家看到自己的落子
+            setTimeout(() => this.aiMove(), 500);
+        }
+    }
+
+    /**
+     * AI自动下棋
+     */
+    aiMove() {
+        if (this.gameOver) return;
+
+        // 获取AI的最佳落子位置
+        const move = this.ai.getBestMove(this.gameLogic.board, this.currentPlayer);
+
+        // 执行落子
+        this.makeMove(move.row, move.col);
+    }
+
+    /**
+     * 切换游戏模式
+     * @param {string} mode - 游戏模式（'pvp'或'pve'）
+     */
+    changeGameMode(mode) {
+        this.gameMode = mode;
+
+        // 显示或隐藏AI难度选择
+        const aiDifficultyContainer = document.getElementById('aiDifficultyContainer');
+        if (mode === 'pve') {
+            aiDifficultyContainer.style.display = 'block';
+            // 创建AI实例
+            this.ai = new AI(this.boardSize, this.aiDifficulty);
+        } else {
+            aiDifficultyContainer.style.display = 'none';
+            this.ai = null;
+        }
+
+        // 重新开始游戏
+        this.restart();
     }
 
     /**
